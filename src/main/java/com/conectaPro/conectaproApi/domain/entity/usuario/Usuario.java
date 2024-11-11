@@ -1,4 +1,4 @@
-package com.conectaPro.conectaproApi.entity;
+package com.conectaPro.conectaproApi.domain.entity.usuario;
 
 
 import jakarta.persistence.*;
@@ -7,11 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "pessoa")
+@Table(name = "usuario")
 @Entity
 public class Usuario {
 
@@ -32,12 +34,22 @@ public class Usuario {
     private String cpf;
 
     @Column(name = "tipo")
-    private Boolean type;
+    private TipoUsuario tipoUsuario;
 
-    @Column(name = "data-criacao")
-    private String dataCriacao;
+    @Column(name = "data_criacao")
+    private LocalDateTime dataCriacao;
 
-    @Column(name = "avaliacao-media")
+    @Column(name = "avaliacao_media")
     private Float avalicaoMedia;
+
+    public Usuario(UsuarioForm form){
+        this.nome = form.nome();
+        this.email = form.email();
+        this.senha = form.senha();
+        this.cpf = form.cpf();
+        this.tipoUsuario = form.tipo();
+        this.dataCriacao = LocalDateTime.now();
+        this.avalicaoMedia = 0.0F;
+    }
 
 }
