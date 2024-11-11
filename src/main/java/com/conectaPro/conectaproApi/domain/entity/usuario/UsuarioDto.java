@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioDto {
+    private Long id;
     private String nome;
     private String email;
     private String cpf;
@@ -18,8 +19,9 @@ public class UsuarioDto {
     private Float avalicao;
 
     public UsuarioDto(Usuario usuario){
+        this.id = usuario.getId();
         this.nome = usuario.getNome();
-        this.email = usuario.getNome();
+        this.email = usuario.getEmail();
         this.cpf = usuario.getCpf();
         this.tipo = usuario.getTipoUsuario();
         this.dataCriacao = usuario.getDataCriacao();
