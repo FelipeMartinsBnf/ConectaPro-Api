@@ -3,7 +3,7 @@ CREATE TABLE Servicos (
     nome VARCHAR(100) NOT NULL,
     descricao TEXT NOT NULL,
     localizacao VARCHAR(255),
-    remoto BOOLEAN DEFAULT,
+    remoto BOOLEAN,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    promovido BOOLEAN DEFAULT FALSE,
+    promovido BOOLEAN DEFAULT FALSE
 );

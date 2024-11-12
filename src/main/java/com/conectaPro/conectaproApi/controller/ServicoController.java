@@ -8,17 +8,22 @@ import com.conectaPro.conectaproApi.domain.entity.usuario.TipoUsuario;
 import com.conectaPro.conectaproApi.domain.entity.usuario.Usuario;
 import com.conectaPro.conectaproApi.domain.repository.ServicoRepository;
 import com.conectaPro.conectaproApi.domain.repository.UsuarioRepository;
+import com.conectaPro.conectaproApi.infra.filtro.FiltroForm;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/api/servico")
+@SecurityRequirement(name = "bearer-key")
 public class ServicoController {
 
     @Autowired
@@ -87,7 +92,26 @@ public class ServicoController {
     }
 
     @GetMapping("/filtrar")
-    public ResponseEntity filtrarServicos(String nome, String localizacao){
-        return ResponseEntity.ok().body(servicoRepository.procuraFiltrada(nome, localizacao));
+    public ResponseEntity filtrarServicos(@RequestBody FiltroForm form){
+        if(form.getTags() != null){
+            List<Servico> resultadoTags = servicoRepository.procuraTags(form.getTags());
+            List<Servico> resultadoFiltros = servicoRepository.procuraFiltrada(form.getNome(), form.getLocalizacao());
+            List<Long> idsTags = new ArrayList<>();
+            for(Servico servico: resultadoTags){
+                idsTags.add(servico.getId());
+            }
+
+            List<Servico> resultado = new ArrayList<>();
+            for (Servico servico : resultadoFiltros){
+                if(idsTags.contains(servico.getId())){
+                    resultado.add(servico);
+                }
+            }
+
+            List<ServicoDetalhadoDto> resultadoDto = resultado.stream().map(ServicoDetalhadoDto:: new).collect(Collectors.toList());
+            return  ResponseEntity.ok().body(resultadoDto);
+
+        }
+        return ResponseEntity.ok().body(servicoRepository.procuraFiltrada(form.getNome(), form.getLocalizacao()));
     }
 }

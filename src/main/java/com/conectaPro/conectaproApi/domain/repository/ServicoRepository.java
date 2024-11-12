@@ -16,4 +16,8 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
             @Param("localizacao") String localizacao
     );
 
+
+    @Query("SELECT s FROM Servico s JOIN s.tags t WHERE t IN :tags")
+    List<Servico> procuraTags(@Param("tags") List<String> tags);
+
 }

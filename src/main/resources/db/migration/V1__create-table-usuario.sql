@@ -1,3 +1,6 @@
+CREATE TYPE usuario_tipo AS ENUM ('ADMIN', 'USER');
+
+
 CREATE TABLE usuario(
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -5,9 +8,8 @@ CREATE TABLE usuario(
     senha VARCHAR(255) NOT NULL,
     cpf VARCHAR(11) UNIQUE NOT NULL,
     localizacao VARCHAR(255),
-    tipo VARCHAR(20) CHECK (tipo IN ('Prestador', 'Contratador')),
+    tipo usuario_tipo,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     avaliacao_media int
 );
 
-)
