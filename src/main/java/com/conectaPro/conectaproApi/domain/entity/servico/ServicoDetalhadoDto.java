@@ -3,12 +3,14 @@ package com.conectaPro.conectaproApi.domain.entity.servico;
 import com.conectaPro.conectaproApi.domain.entity.usuario.Usuario;
 import com.conectaPro.conectaproApi.domain.entity.usuario.UsuarioDto;
 import com.conectaPro.conectaproApi.domain.repository.UsuarioRepository;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@AllArgsConstructor
 public class ServicoDetalhadoDto {
     private Long id;
     private String nome;

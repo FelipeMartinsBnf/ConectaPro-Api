@@ -1,4 +1,7 @@
 package com.conectaPro.conectaproApi.domain.entity.usuario;
 
-public record UsuarioAttForm(String nome, String senha, TipoUsuario tipo) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+public record UsuarioAttForm(@NotBlank String nome, @NotBlank @Size(min = 6) String senha, @NotBlank TipoUsuario tipo) {
 }

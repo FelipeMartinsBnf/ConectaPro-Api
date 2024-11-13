@@ -10,6 +10,7 @@ import com.conectaPro.conectaproApi.domain.repository.ServicoRepository;
 import com.conectaPro.conectaproApi.domain.repository.UsuarioRepository;
 import com.conectaPro.conectaproApi.infra.filtro.FiltroForm;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class ServicoController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public ResponseEntity cadastrarServico(@RequestBody ServicoForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity cadastrarServico(@RequestBody @Valid ServicoForm form, UriComponentsBuilder uriBuilder){
         //Verificar se o usuario Existe e se ele é um Prestador
         Long idUsuario = form.id_autor();
         Optional<Usuario> servicoOptional = usuarioRepository.findById(idUsuario);
@@ -64,7 +65,7 @@ public class ServicoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity AtualizarServico(@PathVariable Long id, @RequestBody ServicoAttDto servicoAttDto){
+    public ResponseEntity AtualizarServico(@PathVariable Long id, @RequestBody @Valid ServicoAttDto servicoAttDto){
         return servicoRepository.findById(id).map(
                 servico -> {
                     servico.setNome(servicoAttDto.nome());
