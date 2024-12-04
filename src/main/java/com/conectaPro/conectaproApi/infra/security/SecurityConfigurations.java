@@ -25,7 +25,7 @@ public class SecurityConfigurations { // Classe de configuração do Spring Secu
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define a política de criação de sessão como STATELESS, indicando que não serão mantidas sessões para cada usuário. Essa configuração é comum em APIs que utilizam JWT para autenticação.
                 .authorizeHttpRequests(req -> { // Inicia a configuração das regras de autorização para as requisições HTTP.
                     req.requestMatchers("/login").permitAll(); // Permite o acesso à rota de login sem necessidade de autenticação, possibilitando que usuários façam login.
-                    req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll(); // Permite o acesso às rotas de documentação da API (Swagger) sem autenticação, para que sejam acessíveis publicamente.
+                    req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/api/usuario/**", "/login/**" ).permitAll(); // Permite o acesso às rotas de documentação da API (Swagger) sem autenticação, para que sejam acessíveis publicamente.
                     req.anyRequest().authenticated(); // Exige que todas as outras requisições sejam autenticadas, aumentando a segurança das demais rotas da aplicação.
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) // Adiciona o filtro de segurança personalizado antes do filtro padrão de autenticação baseado em nome de usuário e senha. Isso permite customizar a lógica de autenticação.
